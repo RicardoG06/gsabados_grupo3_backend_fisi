@@ -1,0 +1,28 @@
+{
+  "name": "backend-dogs-in-cloud",
+  "version": "1.0.0",
+  "description": "Backend para la aplicacion Dogs in cloud",
+  "main": "server.js",
+  "scripts": {
+    "test": "\u001b[6~"
+  },
+  "keywords": [
+    "kotlin",
+    "dogs",
+    "nodejs"
+  ],
+  "author": "MEJARD",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "pg-promise": "^10.11.1",
+    "retrofit": "^0.2.11"
+  }
+}
