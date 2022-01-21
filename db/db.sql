@@ -52,12 +52,22 @@ CREATE TABLE trabajador(
 	precio_x_hora_cuidado INT NULL,
 	precio_x_hora_paseo INT NULL,
 	direccion VARCHAR(255) NULL,
-	distrito VARCHAR(255) NULL,
+	distrito INT NULL,
 	popularidad INT NULL,
 	created_at TIMESTAMP (0) NOT NULL,
-	updated_at TIMESTAMP (0) NOT NULL
+	updated_at TIMESTAMP (0) NOT NULL,
 	FOREIGN KEY(disponibilidad) REFERENCES dias_trabajo(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(distrito) REFERENCES distrito(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+
+DROP TABLE IF EXISTS distrito CASCADE;
+CREATE TABLE distrito(
+	id BIGSERIAL PRIMARY KEY,
+	nombre_distrito VARCHAR(255) NOT NULL
+);
+
+
 
 DROP TABLE IF EXISTS dias_trabajo CASCADE;
 CREATE TABLE dias_trabajo(

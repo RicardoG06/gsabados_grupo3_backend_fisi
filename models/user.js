@@ -89,4 +89,33 @@ User.findById = (id, callback) => {
         return db.oneOrNone(sql, id).then(user => { callback(null, user)})
 }
 
+User.update = (user) => {
+	const sql = `
+		UPDATE
+			users
+		SET
+			name = $2,
+			lastname = $3,
+			phone = $4,
+			dni = $5,
+			edad = $6,
+			image = $7,
+			updated_at = $8
+		WHERE
+			id = $1
+	`;
+
+	return db.none(sql,[
+		user.id,
+		user.name,
+		user.lastname,
+		user.phone,
+		user.dni,
+		user.edad,
+		user.image,
+		new Date()
+
+	]);
+}
+
 module.exports = User;

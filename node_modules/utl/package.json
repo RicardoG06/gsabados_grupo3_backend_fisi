@@ -1,0 +1,30 @@
+{
+  "name": "utl",
+  "version": "0.0.1",
+  "main": "utl.js",
+  "description": "The missing utility module (save,load,download,ls and more)",
+  "homepage": "http://github.com/evanmoran/utl",
+  "keywords": [
+    "utl",
+    "utility",
+    "download",
+    "save",
+    "load",
+    "ls"
+  ],
+  "author": "Evan Moran <evan@evanmoran.com>",
+  "dependencies": {
+    "underscore":"latest"
+  },
+  "scripts": {
+    "test": "cake test"
+  },
+  "devDependencies": {
+    "mocha": "~1.1.0",
+    "chai": "~1.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/evanmoran/utl.git"
+  }
+}

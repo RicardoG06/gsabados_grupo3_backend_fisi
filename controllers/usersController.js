@@ -3,6 +3,7 @@ const Rol_ad_us = require('../models/rol_ad_usu')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
+const storage = require('../utils/cloud_storage')
 
 module.exports = {
     async getAll(req,res,next){
@@ -117,9 +118,42 @@ module.exports = {
                 error: error
             });
         }
+    },
+
+    async update(req,res,next){
+        try {
+            console.log('Usuario', req.body.user)
+            const user = JSON.parse( req.body.user); // CLIENTE DEBE ENVIARNOS UN OBJETO USER
+            console.log('Usuario Parseado', user)
+
+            const files = req.files;
+
+            if(files.length > 0){ //CLIENTE NOS ENVIA UN ARCHIVO
+                const pathImage = `image_${Date.now}`; //NOMBRE DEL ARCHIVO
+                const url = await storage(files[0], pathImage);
+
+                if(url != undefined && url != null){
+                    user.image = url
+                }
+            }
+
+            await User.update(user); //GUARDANDO LA URL EN LA BD
+
+            return res.status(201).json({
+                success: true,
+                message: 'Los datos se han actualizado correctamente',
+                data: user
+            });
+
+
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error al actualizar los datos del usuario',
+                error: error
+        });
+
+        }
     }
-
-
-
-
 };
