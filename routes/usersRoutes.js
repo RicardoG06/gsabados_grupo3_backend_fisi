@@ -12,3 +12,4 @@ module.exports = (app, upload) => {
 
     app.put('/api/users/update', upload.array('image', 1), UsersController.update);
 }
+

@@ -6,5 +6,5 @@ module.exports = (app) => {
 
     // Guardar datos
     app.post('/api/trabajador/create', TrabajadorController.register);
-
 }
+
