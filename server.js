@@ -22,6 +22,7 @@ const upload = multer({
 
 const users = require('./routes/usersRoutes');
 const trabajador = require('./routes/trabajadorRoutes');
+const Perritos = require('./routes/perritosRoutes');
 
 /* FIN DE RUTAS */
 
@@ -47,6 +48,7 @@ app.set('port',port);
 
 users(app, upload);
 trabajador(app);
+Perritos(app, upload);
 
 /* Fin de llamada a la app */
 

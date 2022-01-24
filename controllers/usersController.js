@@ -91,7 +91,8 @@ module.exports = {
                     phone: myUser.phone,
                     image: myUser.image,
                     session_token: `JWT ${token}`,
-                    roles: myUser.roles
+                    roles: myUser.roles,
+                    perritos: myUser.perritos
                 };
 
                 console.log(`USUARIO ENVIADO ${data}`);
@@ -127,6 +128,8 @@ module.exports = {
             console.log('Usuario Parseado', user)
 
             const files = req.files;
+
+            console.log(files)
 
             if(files.length > 0){ //CLIENTE NOS ENVIA UN ARCHIVO
                 const pathImage = `image_${Date.now}`; //NOMBRE DEL ARCHIVO

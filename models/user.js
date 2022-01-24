@@ -29,40 +29,55 @@ User.create = async (user) => {
 
 User.findByEmail = (email) => {
     const sql = `
-    SELECT 
-        U.id,
-	    U.email,
-	    U.name,
-	    U.lastname,
-        U.dni,
-        U.edad,
-	    U.image,
-	    U.phone,
-	    U.password,
-	    U.session_token,
-		json_agg(
-			json_build_object(
-				'id',R.id,
-				'name',R.name,
-				'image',R.image,
-				'route',R.route
-			)
-		) AS roles
-    FROM
-	    users AS U
-	INNER JOIN 
-		user_has_roles_usad AS UHRU
-	ON
-		UHRU.id_user = U.id
-	INNER JOIN
-		roles_usur_admin AS R
-	ON 
-		R.id = UHRU.id_rol
-    WHERE 
-	    U.email = $1
-	GROUP BY 
-		U.id
-    `;
+	SELECT 
+	U.id,
+	U.email,
+	U.name,
+	U.lastname,
+	U.dni,
+	U.edad,
+	U.image,
+	U.phone,
+	U.password,
+	U.session_token,
+	json_agg(
+		json_build_object(
+			'id',Pe.id,
+			'name',Pe.name,
+			'descripcion',Pe.descripcion,
+			'raza',Pe.raza,
+			'edad', Pe.edad,
+			'image',Pe.image,
+			'id_user',Pe.id_user
+		)
+	) AS perritos,
+	json_agg(
+		json_build_object(
+			'id',R.id,
+			'name',R.name,
+			'image',R.image,
+			'route',R.route
+		)
+	) AS roles	
+		FROM
+			Perritos AS Pe
+		INNER JOIN
+			users AS U
+		ON
+			Pe.id_user = U.id	
+		INNER JOIN 
+			user_has_roles_usad AS UHRU
+		ON
+			UHRU.id_user = U.id
+		INNER JOIN
+			roles_usur_admin AS R
+		ON 
+			R.id = UHRU.id_rol
+		WHERE 
+			U.email = $1 
+		GROUP BY 
+			U.id
+    	`;
 
         return db.oneOrNone(sql, email);
 }
