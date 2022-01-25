@@ -7,6 +7,7 @@ module.exports = (app, upload) => {
     // Guardar datos
     app.post('/api/users/create', UsersController.register);
     app.post('/api/users/login', UsersController.login);
+    app.post('/api/users/validacion', UsersController.ValidacionRegistro);
 
     //ACTUALIZAR DATOS
 

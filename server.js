@@ -53,7 +53,9 @@ Perritos(app, upload);
 /* Fin de llamada a la app */
 
 server.listen(3000, '192.168.1.73' || 'localhost',function(){
+    console.log("Conexion a la base de datos de manera exitosa")
     console.log('Aplicacion de NodeJS ' + process.pid + ' Iniciada...')
+
 });
 
 // ERROR HANDLER

@@ -28,8 +28,7 @@ User.create = async (user) => {
 }
 
 User.findByEmail = (email) => {
-    const sql = `
-	SELECT 
+    const sql = `SELECT
 	U.id,
 	U.email,
 	U.name,
@@ -50,19 +49,19 @@ User.findByEmail = (email) => {
 			'image',Pe.image,
 			'id_user',Pe.id_user
 		)
-	) AS perritos,
+	) AS perr,
 	json_agg(
-		json_build_object(
-			'id',R.id,
-			'name',R.name,
-			'image',R.image,
-			'route',R.route
-		)
-	) AS roles	
+        json_build_object(
+            'id',R.id,
+            'name',R.name,
+            'image',R.image,
+            'route',R.route
+        )
+    ) AS rol
 		FROM
-			Perritos AS Pe
-		INNER JOIN
 			users AS U
+		LEFT JOIN
+			perritos AS Pe
 		ON
 			Pe.id_user = U.id	
 		INNER JOIN 
@@ -74,8 +73,8 @@ User.findByEmail = (email) => {
 		ON 
 			R.id = UHRU.id_rol
 		WHERE 
-			U.email = $1 
-		GROUP BY 
+			U.email = $1
+		GROUP BY
 			U.id
     	`;
 

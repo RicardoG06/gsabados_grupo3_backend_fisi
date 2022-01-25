@@ -91,8 +91,8 @@ module.exports = {
                     phone: myUser.phone,
                     image: myUser.image,
                     session_token: `JWT ${token}`,
-                    roles: myUser.roles,
-                    perritos: myUser.perritos
+                    roles: myUser.rol,
+                    perritos: myUser.perr
                 };
 
                 console.log(`USUARIO ENVIADO ${data}`);
@@ -112,6 +112,56 @@ module.exports = {
             }
 
         } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error con el login del usuario',
+                error: error
+            });
+        }
+    },
+
+
+    async ValidacionRegistro(req,res,next){
+        try {
+            const email = req.body.email;
+
+            const myUser = await User.findByEmail(email);
+
+            if(!myUser){
+                return res.status(401).json({
+                    success: false,
+                    message: 'El email no fue encontrado'
+                })
+            }
+
+                const token = jwt.sign({ id: myUser.id, email: myUser.email }, keys.secretOrKey, {
+                    // expiresIn:
+                })
+
+                const data = {
+                    id: myUser.id,
+                    name: myUser.name,
+                    lastname: myUser.lastname,
+                    email: myUser.email,
+                    dni: myUser.dni,
+                    edad: myUser.edad,
+                    phone: myUser.phone,
+                    image: myUser.image,
+                    session_token: `JWT ${token}`,
+                    roles: myUser.rol,
+                    perritos: myUser.perr
+                };
+
+                console.log(`USUARIO ENVIADO ${data}`);
+
+                return res.status(201).json({
+                    success: true,
+                    message: 'El usuario a sido autenticado',
+                    data: data
+                })
+    }   
+        catch (error) {
             console.log(`Error: ${error}`);
             return res.status(501).json({
                 success: false,
