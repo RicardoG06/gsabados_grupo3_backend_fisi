@@ -1,7 +1,6 @@
 const Trabajador = require('../models/trabajador');
 const Rol_pa_cu = require('../models/rol_pa_cu');
 
-
 module.exports = {
     async getAll(req,res,next){
         try{
@@ -18,6 +17,23 @@ module.exports = {
         }  
 
     },
+
+    async findByrol(req, res, next){
+        try{
+            const id_rol = req.params.id_rol;
+            const data = await Trabajador.findByrol(id_rol);
+
+            return res.status(201).json(data);
+        }catch{
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Error al traer el trabajador por su rol',
+                error: error
+            });
+        }
+    },
+
 
     async register(req,res,next){
         try {

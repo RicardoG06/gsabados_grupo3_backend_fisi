@@ -5,7 +5,7 @@ const User = {};
 
 User.getAll = () => {
     const sql = `SELECT * FROM users`;
-    return db.manyOrNone(sql);
+    	return db.manyOrNone(sql);
 }
 
 User.create = async (user) => {

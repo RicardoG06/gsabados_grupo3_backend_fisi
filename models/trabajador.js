@@ -4,7 +4,44 @@ const bcrypt = require('bcryptjs');
 const Trabajador = {};
 
 Trabajador.getAll = () => {
-    const sql = `SELECT * FROM trabajador`;
+    const sql = `SELECT 
+    Tr.id,
+    Tr.email,
+    Tr.name,
+    Tr.lastname,
+    Tr.dni,
+    Tr.edad,
+    Tr.image,
+    Tr.phone,
+    Tr.password,
+    Tr.session_token,
+    disp.dia_trabajo AS disp, 
+    Tr.precio_x_hora_cuidado,
+    Tr.precio_x_hora_paseo,
+    Tr.direccion,
+    dist.nombre_distrito AS dist, 
+    Tr.popularidad,
+    json_agg(
+    json_build_object(
+        'id',R.id,
+        'name',R.name
+    )
+) AS rol
+FROM
+    trabajador AS Tr
+INNER JOIN dias_trabajo AS disp ON
+    disp.id = Tr.disponibilidad	
+INNER JOIN distrito AS dist ON
+    dist.id = Tr.distrito
+INNER JOIN trab_has_roles_pacu AS UHRP ON
+    UHRP.id_user = Tr.id
+INNER JOIN roles_pas_cui as R ON
+    R.id = UHRP.id_rol
+GROUP BY
+    Tr.id,
+    disp.dia_trabajo,
+    dist.nombre_distrito
+`;
     return db.manyOrNone(sql);
 }
 
@@ -89,6 +126,50 @@ Trabajador.findById = (id, callback) => {
     `;
 
         return db.oneOrNone(sql, id).then(user => { callback(null, user)})
+}
+
+Trabajador.findByrol = (id_rol) => {
+    const sql = `SELECT 
+    Tr.id,
+    Tr.email,
+    Tr.name,
+    Tr.lastname,
+    Tr.dni,
+    Tr.edad,
+    Tr.image,
+    Tr.phone,
+    Tr.password,
+    Tr.session_token,
+    disp.dia_trabajo AS disp, 
+    Tr.precio_x_hora_cuidado,
+    Tr.precio_x_hora_paseo,
+    Tr.direccion,
+    dist.nombre_distrito AS dist, 
+    Tr.popularidad,
+    json_agg(
+    json_build_object(
+        'id',R.id,
+        'name',R.name
+    )
+) AS rol
+FROM
+    trabajador AS Tr
+INNER JOIN dias_trabajo AS disp ON
+    disp.id = Tr.disponibilidad	
+INNER JOIN distrito AS dist ON
+    dist.id = Tr.distrito
+INNER JOIN trab_has_roles_pacu AS UHRP ON
+    UHRP.id_user = Tr.id
+INNER JOIN roles_pas_cui as R ON
+    R.id = UHRP.id_rol
+WHERE 
+    R.id = $1
+GROUP BY
+    Tr.id,
+    disp.dia_trabajo,
+    dist.nombre_distrito
+`;
+    return db.manyOrNone(sql , id_rol);
 }
 
 module.exports = Trabajador;
