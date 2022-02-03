@@ -135,6 +135,32 @@ CREATE TABLE perritos(
 	updated_at TIMESTAMP (0) NOT NULL
 );
 
+DROP TABLE IF EXISTS orders CASCADE;
+CREATE TABLE orders(
+	id_orden BIGSERIAL PRIMARY KEY,
+	id_user BIGINT NULL,
+	nombre_cuidador VARCHAR(120) NULL,
+	popularidad_cuidador VARCHAR(120) NULL,
+	precio_x_hora_cuidador VARCHAR(120) NULL,
+	imagen_trabajador VARCHAR(120) NULL,
+	precio_total VARCHAR(120) NULL,
+	nombre_perrito VARCHAR(120) NULL,
+	raza_perrito VARCHAR(120) NULL,
+	fecha_cuidado VARCHAR(120) NULL,
+	hora_inicio VARCHAR(120) NULL,
+	horas_servicio VARCHAR(120) NULL,
+	direccion_cliente VARCHAR(120) NULL,
+	referencia_cliente VARCHAR(120) NULL,
+	tipo_trabajador VARCHAR(120) NULL,
+	lat DECIMAL DEFAULT 0,
+	lng DECIMAL DEFAULT 0,
+	status VARCHAR(90) NULL,
+	timestamp BIGINT NULL,
+	created_at TIMESTAMP(0) NULL,
+	updated_at TIMESTAMP(0) NULL,
+	FOREIGN KEY (id_user) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 INSERT INTO roles_usur_admin(
 	name,
 	route,

@@ -25,9 +25,11 @@ module.exports = {
             const files = req.files;
             console.log(files)
 
+            var random = Math.floor(Math.random() * (100000 - 1)) + 1
+
             
             if(files.length > 0){  //CLIENTE NOS ENVIA UN ARCHIVO
-                const pathImage = `image_${Date.now}`; //NOMBRE DEL ARCHIVO
+                const pathImage = `image_${random}`; //NOMBRE DEL ARCHIVO
                 const url = await storage(files[0], pathImage)
 
                 if(url != undefined && url != null){
