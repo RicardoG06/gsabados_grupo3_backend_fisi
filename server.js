@@ -8,6 +8,11 @@ const passport = require('passport')
 const multer = require('multer');
 const serviceAccount = require ('./serviceAccountKey.json');
 const admin = require('firebase-admin')
+const mercadoPago = require('mercadopago')
+
+mercadoPago.configure({
+    access_token : 'TEST-2618165342880021-020407-aeb3404942be56b4f36492499d0c95ec-1068540677'
+});
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -24,6 +29,7 @@ const users = require('./routes/usersRoutes');
 const trabajador = require('./routes/trabajadorRoutes');
 const Perritos = require('./routes/perritosRoutes');
 const orders = require('./routes/ordersRoutes');
+const mercadoPagoRoutes = require('./routes/mercadoPagoRoutes')
 
 /* FIN DE RUTAS */
 
@@ -51,6 +57,7 @@ users(app, upload);
 trabajador(app);
 Perritos(app, upload);
 orders(app);
+mercadoPagoRoutes(app);
 
 /* Fin de llamada a la app */
 

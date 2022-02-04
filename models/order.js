@@ -2,6 +2,72 @@ const db = require('../config/config')
 
 const Order = {};
 
+Order.findByStatus = (status) =>{
+    const sql = `
+    SELECT
+	O.id_orden,
+	O.id_user,
+	O.nombre_cuidador,
+	O.precio_x_hora_cuidador,
+	O.precio_x_hora_paseador,
+	O.direccion_cliente,
+	O.referencia_cliente,
+	O.fecha_cuidado,
+	O.hora_inicio,
+	o.horas_servicio,
+	O.nombre_cuidador,
+	O.status,
+    O.lat,
+    O.lng,
+	O.timestamp
+FROM
+	orders AS O
+INNER JOIN
+	users AS U
+ON
+	O.id_user = U.id
+WHERE 
+	status = $1;
+    `;
+
+    return db.manyOrNone(sql,status)
+
+},
+
+Order.findByClientAndStatus = (id_user,status) =>{
+    const sql = `
+    SELECT
+	O.id_orden,
+	O.id_user,
+	O.nombre_cuidador,
+	O.precio_x_hora_cuidador,
+	O.precio_x_hora_paseador,
+	O.direccion_cliente,
+	O.referencia_cliente,
+	O.fecha_cuidado,
+	O.hora_inicio,
+	o.horas_servicio,
+	O.nombre_cuidador,
+	O.status,
+    O.lat,
+    O.lng,
+	O.timestamp
+FROM
+	orders AS O
+INNER JOIN
+	users AS U
+ON
+	O.id_user = U.id
+WHERE 
+	O.id_user = $1 AND status = $2;
+    `;
+
+    return db.manyOrNone(sql,[id_user , status])
+
+}
+
+
+
 Order.create = (order) => {
     const sql =
     `INSERT INTO
