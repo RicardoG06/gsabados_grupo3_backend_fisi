@@ -51,7 +51,7 @@ module.exports = {
 
         try{
 
-            const order = req.body;
+            let order = req.body;
             order.status = 'PAGADO';
             const data = await Order.create(order);
 

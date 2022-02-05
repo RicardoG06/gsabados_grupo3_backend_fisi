@@ -36,12 +36,11 @@ module.exports = {
 
           if (data){
               // EL PAGO SE REALIZO CORRECTAMENTE
+
               return res.status(201).json({
                 message: `El pago se ha realizo correctamente`,
                 success: true,
-                data: {
-                    'response': data.response
-                }
+                data: data.response
               })
           }
           else{
